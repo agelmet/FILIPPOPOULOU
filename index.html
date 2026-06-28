@@ -26,7 +26,7 @@
   --fancy:'Playfair Display',Georgia,serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:100px;}
 body{
   font-family:var(--sans);
   color:var(--ink);
@@ -80,14 +80,14 @@ header{
   transition:background .5s ease,padding .5s ease,box-shadow .5s ease;
 }
 header.scrolled{
-  background:rgba(251,248,242,.85);backdrop-filter:blur(14px);
+  background:rgba(251,248,242,.92);backdrop-filter:blur(14px);
   padding:14px clamp(20px,5vw,70px);box-shadow:0 8px 30px var(--shadow);
 }
 .brand{display:flex;align-items:center;gap:14px;cursor:pointer;z-index:1002}
 .brand img{width:46px;height:46px;border-radius:50%;object-fit:cover;border:1.5px solid var(--gold-soft);box-shadow:0 4px 14px var(--shadow)}
-.brand-txt{display:flex;flex-direction:column;line-height:1.1}
-.brand-txt b{font-family:var(--fancy);font-size:1.55rem;font-weight:600;letter-spacing:.02em;color:var(--ink)}
-.brand-txt span{font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--sage-deep);font-weight:600;margin-top:2px}
+.brand-txt{display:flex;flex-direction:column;line-height:1.1;transition:color .4s}
+.brand-txt b{font-family:var(--fancy);font-size:1.55rem;font-weight:600;letter-spacing:.02em;color:var(--ink);transition:color .4s}
+.brand-txt span{font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--sage-deep);font-weight:600;margin-top:2px;transition:color .4s}
 
 .nav-links{display:flex;align-items:center;gap:36px}
 .nav-links a{
@@ -112,6 +112,15 @@ header.scrolled{
 .menu-toggle{display:none;flex-direction:column;gap:6px;cursor:pointer;z-index:1002;background:none;border:none;padding:8px}
 .menu-toggle span{width:28px;height:2px;background:var(--ink);transition:all .35s;border-radius:2px}
 
+/* HEADER DYNAMIC COLORS (On Top vs Scrolled) */
+@media(min-width:981px){
+  header:not(.scrolled) .nav-links a{color:rgba(255,255,255,.95);text-shadow:0 1px 5px rgba(0,0,0,.5)}
+  header:not(.scrolled) .nav-links a:hover{color:#fff}
+}
+header:not(.scrolled) .brand-txt b{color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.5)}
+header:not(.scrolled) .brand-txt span{color:rgba(255,255,255,.85);text-shadow:0 1px 5px rgba(0,0,0,.4)}
+header:not(.scrolled) .menu-toggle span{background:#fff}
+
 /* ---------- HERO ---------- */
 .hero{
   position:relative;min-height:100vh;display:flex;align-items:center;
@@ -125,7 +134,7 @@ header.scrolled{
 @keyframes zoomHero{0%{transform:scale(1)}100%{transform:scale(1.15)}}
 .hero-overlay{
   position:absolute;inset:0;z-index:1;
-  background:linear-gradient(135deg,rgba(29,43,42,.92) 0%,rgba(29,43,42,.65) 100%);
+  background:linear-gradient(135deg,rgba(29,43,42,.65) 0%,rgba(29,43,42,.25) 100%);
 }
 
 .hero-inner{position:relative;z-index:2;max-width:1300px;margin:0 auto;width:100%;
@@ -135,15 +144,15 @@ header.scrolled{
   text-transform:uppercase;color:var(--gold-soft);margin-bottom:26px;
   text-shadow:0 2px 10px rgba(0,0,0,.3);
 }
-.hero-eyebrow .line{width:46px;height:1px;background:var(--gold-soft)}
+.hero-eyebrow .line{width:46px;height:1px;background:var(--gold-soft);box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .hero h1{
   font-family:var(--fancy);font-weight:600;font-size:clamp(2.9rem,6.5vw,5.4rem);line-height:1.02;
   letter-spacing:-.01em;color:#fff;margin-bottom:8px;
-  text-shadow:0 10px 30px rgba(0,0,0,.5);
+  text-shadow:0 8px 25px rgba(0,0,0,.6);
 }
 .hero h1 .it{font-style:italic;color:var(--gold-soft)}
 .hero .role{font-family:var(--fancy);font-size:clamp(1.3rem,2.6vw,1.9rem);font-style:italic;color:var(--gold);margin-bottom:26px;text-shadow:0 4px 15px rgba(0,0,0,.4)}
-.hero p.lead{font-size:1.08rem;color:rgba(255,255,255,.85);max-width:520px;margin-bottom:36px;font-weight:400;text-shadow:0 2px 10px rgba(0,0,0,.2)}
+.hero p.lead{font-size:1.08rem;color:rgba(255,255,255,.9);max-width:520px;margin-bottom:36px;font-weight:500;text-shadow:0 2px 10px rgba(0,0,0,.4)}
 .hero-cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
 .btn{
   display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:50px;font-weight:600;
@@ -151,8 +160,10 @@ header.scrolled{
 }
 .btn-primary{background:var(--sage-deep);color:#fff;box-shadow:0 12px 30px rgba(94,123,115,.4)}
 .btn-primary:hover{background:var(--gold);color:var(--ink);transform:translateY(-4px);box-shadow:0 18px 40px rgba(194,163,107,.4)}
-.btn-ghost{background:rgba(255,255,255,.05);backdrop-filter:blur(10px);color:#fff;border:1.5px solid rgba(255,255,255,.3)}
+.btn-ghost{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);color:#fff;border:1.5px solid rgba(255,255,255,.4)}
 .btn-ghost:hover{background:#fff;color:var(--ink);transform:translateY(-4px);border-color:#fff}
+.btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--sage-deep)}
+.btn-outline:hover{background:var(--sage-deep);color:#fff;transform:translateY(-4px);box-shadow:0 12px 25px rgba(94,123,115,.3)}
 .btn svg{width:17px;height:17px}
 
 .hero-portrait{position:relative}
@@ -164,25 +175,25 @@ header.scrolled{
 .hero-portrait .frame img{width:100%;height:100%;object-fit:cover;cursor:zoom-in;transition:transform 1.2s ease}
 .hero-portrait .frame:hover img{transform:scale(1.05)}
 .hero-badge{
-  position:absolute;bottom:-26px;left:-26px;background:rgba(255,255,255,.1);backdrop-filter:blur(16px);border-radius:20px;padding:18px 24px;
-  box-shadow:0 20px 50px rgba(0,0,0,.3);display:flex;align-items:center;gap:14px;
+  position:absolute;bottom:-26px;left:-26px;background:rgba(255,255,255,.12);backdrop-filter:blur(20px);border-radius:20px;padding:18px 24px;
+  box-shadow:0 20px 50px rgba(0,0,0,.4);display:flex;align-items:center;gap:14px;
   border:1px solid rgba(255,255,255,.2);color:#fff;
 }
 .hero-badge .dot{width:12px;height:12px;border-radius:50%;background:#5fb88a;box-shadow:0 0 0 4px rgba(95,184,138,.3);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(95,184,138,.3)}50%{box-shadow:0 0 0 10px rgba(95,184,138,0)}}
-.hero-badge b{font-family:var(--fancy);font-size:1.15rem;display:block;line-height:1.2;color:#fff}
-.hero-badge span{font-size:.72rem;color:rgba(255,255,255,.75)}
+.hero-badge b{font-family:var(--fancy);font-size:1.15rem;display:block;line-height:1.2;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.3)}
+.hero-badge span{font-size:.72rem;color:rgba(255,255,255,.85);text-shadow:0 1px 4px rgba(0,0,0,.3)}
 
 .scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:3;
-  display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.6);font-size:.66rem;
+  display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.8);font-size:.66rem;
   letter-spacing:.25em;text-transform:uppercase}
-.scroll-hint .mouse{width:22px;height:34px;border:1.5px solid rgba(255,255,255,.6);border-radius:14px;position:relative}
-.scroll-hint .mouse::after{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:3px;height:7px;background:rgba(255,255,255,.6);border-radius:2px;animation:scrolldot 1.6s infinite}
+.scroll-hint .mouse{width:22px;height:34px;border:1.5px solid rgba(255,255,255,.8);border-radius:14px;position:relative}
+.scroll-hint .mouse::after{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:3px;height:7px;background:rgba(255,255,255,.8);border-radius:2px;animation:scrolldot 1.6s infinite}
 @keyframes scrolldot{0%{opacity:1;top:6px}100%{opacity:0;top:16px}}
 
 /* ---------- SECTION SHELL ---------- */
 section{position:relative}
-.wrap{max-width:1200px;margin:0 auto;padding:clamp(70px,11vw,140px) clamp(20px,5vw,40px)}
+.wrap{max-width:1200px;margin:0 auto;padding:clamp(70px,11vw,130px) clamp(20px,5vw,40px)}
 .sec-head{text-align:center;max-width:680px;margin:0 auto 64px}
 .kicker{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;font-weight:700;letter-spacing:.3em;
   text-transform:uppercase;color:var(--gold);margin-bottom:18px}
@@ -232,9 +243,9 @@ section{position:relative}
 .phil-card:hover::before{opacity:1}
 .phil-icon{width:64px;height:64px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:26px;box-shadow:0 10px 25px var(--shadow);transition:transform .5s}
 .phil-card:hover .phil-icon{transform:scale(1.1) rotate(5deg)}
-.phil-icon svg{width:32px;height:32px;color:var(--sage-deep)}
+.phil-icon svg{width:30px;height:30px;color:var(--sage-deep)}
 .phil-card h4{font-family:var(--fancy);font-size:1.5rem;font-weight:600;margin-bottom:14px}
-.phil-card p{color:var(--ink-soft);font-size:.98rem}
+.phil-card p{color:var(--ink-soft);font-size:.98rem;line-height:1.6}
 
 /* ---------- SERVICES ---------- */
 .services{background:var(--ink);color:var(--cream);position:relative;overflow:hidden}
@@ -323,7 +334,7 @@ section{position:relative}
 
 /* ---------- CONTACT ---------- */
 .contact{background:var(--ink);color:var(--cream);position:relative;overflow:hidden}
-.contact .blob{opacity:.18}
+.contact .blob{opacity:.18;pointer-events:none;}
 .contact .blob.c1{width:420px;height:420px;background:var(--sage);top:-100px;left:-80px}
 .contact .blob.c2{width:380px;height:380px;background:var(--gold);bottom:-120px;right:-90px;opacity:.12}
 .contact .kicker{color:var(--gold-soft)}
@@ -402,10 +413,10 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
   .about-img .quote-card{right:0}
   .phil-grid{grid-template-columns:1fr}
   .phil-card:nth-child(2){transform:translateY(0)}
-  .contact-grid{grid-template-columns:1fr;gap:34px}
+  .contact-grid{grid-template-columns:1fr;gap:40px}
   .nav-links{
-    position:fixed;top:0;right:0;width:min(82vw,360px);height:100vh;background:var(--cream);
-    flex-direction:column;justify-content:center;gap:30px;padding:60px 40px;
+    position:fixed;top:0;right:0;width:min(85vw,380px);height:100vh;background:var(--cream);
+    flex-direction:column;justify-content:flex-start;gap:30px;padding:120px 40px 60px;
     transform:translateX(100%);transition:transform .5s cubic-bezier(.4,0,.2,1);box-shadow:-20px 0 60px rgba(0,0,0,.18);
     z-index:1001;
   }
@@ -436,6 +447,7 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
 </head>
 <body>
 
+<!-- PRELOADER -->
 <div id="preloader">
   <img src="https://raw.githubusercontent.com/agelmet/FILIPPOPOULOU/0b6c6b9465b92a2e2285436b2c6a4385880f0967/filiplog.jpg" class="loader-logo" alt="Logo">
   <div class="loader-name">Φανή Φιλιπποπούλου</div>
@@ -445,6 +457,7 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
 <div class="progress" id="progress"></div>
 <div class="cursor-glow" id="cursorGlow"></div>
 
+<!-- HEADER -->
 <header id="header">
   <div class="brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
     <img src="https://raw.githubusercontent.com/agelmet/FILIPPOPOULOU/0b6c6b9465b92a2e2285436b2c6a4385880f0967/filiplog.jpg" alt="Logo Φανή Φιλιπποπούλου">
@@ -479,6 +492,7 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
   </button>
 </header>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
@@ -513,6 +527,7 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
   </div>
 </section>
 
+<!-- ABOUT -->
 <section class="about" id="about">
   <div class="wrap">
     <div class="about-grid">
@@ -542,92 +557,106 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
   </div>
 </section>
 
+<!-- APPROACH -->
 <section class="approach" id="approach">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="kicker"><span class="line"></span><span data-el="Η Προσέγγισή μου" data-en="My Approach">Η Προσέγγισή μου</span><span class="line"></span></span>
-      <h2 data-el="Θεραπεία με <span class='it'>επιστήμη</span> και ψυχή" data-en="Therapy with <span class='it'>science</span> and soul">Θεραπεία με <span class="it">επιστήμη</span> και ψυχή</h2>
+      <h2 data-el="Σύγχρονη ψυχοθεραπεία, με επίκεντρο <span class='it'>εσάς</span>" data-en="Modern psychotherapy, centered on <span class='it'>you</span>">Σύγχρονη ψυχοθεραπεία, με επίκεντρο <span class="it">εσάς</span></h2>
       <p data-el="Η Γνωσιακή – Συμπεριφοριστική Θεραπεία αναδιαμορφώνει τις δυσλειτουργικές σκέψεις που μας επηρεάζουν, βοηθώντας μας να αλλάξουμε το συναίσθημα και τη συμπεριφορά μας." data-en="Cognitive – Behavioural Therapy reshapes the dysfunctional thoughts that affect us, helping us transform how we feel and act.">Η Γνωσιακή – Συμπεριφοριστική Θεραπεία αναδιαμορφώνει τις δυσλειτουργικές σκέψεις που μας επηρεάζουν, βοηθώντας μας να αλλάξουμε το συναίσθημα και τη συμπεριφορά μας.</p>
     </div>
     <div class="phil-grid">
       <div class="phil-card reveal d1">
-        <div class="phil-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+        <div class="phil-icon">
+          <!-- Heart in hand for empathy and safety -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        </div>
         <h4 data-el="Ασφαλής χώρος" data-en="A safe space">Ασφαλής χώρος</h4>
-        <p data-el="Ένα περιβάλλον χωρίς κρίση, όπου μπορείς να μιλήσεις ελεύθερα. Κάθε άνθρωπος αξίζει να ακουστεί και να γίνει κατανοητός." data-en="A judgment-free environment where you can speak freely. Every person deserves to be heard and understood.">Ένα περιβάλλον χωρίς κρίση, όπου μπορείς να μιλήσεις ελεύθερα. Κάθε άνθρωπος αξίζει να ακουστεί και να γίνει κατανοητός.</p>
+        <p data-el="Ένα περιβάλλον αποδοχής χωρίς κριτική, όπου μπορείτε να εκφραστείτε ελεύθερα. Η κατανόηση και η ενσυναίσθηση αποτελούν τη βάση της θεραπευτικής μας σχέσης." data-en="A judgment-free space of acceptance, where you can express yourself freely. Understanding and empathy form the foundation of our therapeutic relationship.">Ένα περιβάλλον αποδοχής χωρίς κριτική, όπου μπορείτε να εκφραστείτε ελεύθερα. Η κατανόηση και η ενσυναίσθηση αποτελούν τη βάση της θεραπευτικής μας σχέσης.</p>
       </div>
       <div class="phil-card reveal d2">
-        <div class="phil-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-7 7c0 2.4 1.2 4.5 3 5.7V17a2 2 0 002 2h4a2 2 0 002-2v-2.3c1.8-1.2 3-3.3 3-5.7a7 7 0 00-7-7z"/><path d="M9 22h6"/></svg></div>
+        <div class="phil-icon">
+          <!-- Target/Goals for practical tools -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
         <h4 data-el="Πρακτικά εργαλεία" data-en="Practical tools">Πρακτικά εργαλεία</h4>
-        <p data-el="Δεν μιλάμε μόνο — δουλεύουμε. Παίρνεις συγκεκριμένες τεχνικές για το άγχος, τις κρίσεις πανικού και τις αρνητικές σκέψεις που εφαρμόζεις στην καθημερινότητά σου." data-en="We don’t just talk — we work. You gain concrete techniques for anxiety, panic and negative thoughts that you apply in daily life.">Δεν μιλάμε μόνο — δουλεύουμε. Παίρνεις συγκεκριμένες τεχνικές για το άγχος, τις κρίσεις πανικού και τις αρνητικές σκέψεις που εφαρμόζεις στην καθημερινότητά σου.</p>
+        <p data-el="Η θεραπεία έχει συγκεκριμένους στόχους. Μαθαίνετε τεχνικές για να διαχειρίζεστε το άγχος, τις κρίσεις πανικού και τις αρνητικές σκέψεις στην καθημερινότητά σας." data-en="Therapy has concrete goals. You learn practical techniques to manage anxiety, panic attacks, and negative thoughts in your daily life.">Η θεραπεία έχει συγκεκριμένους στόχους. Μαθαίνετε τεχνικές για να διαχειρίζεστε το άγχος, τις κρίσεις πανικού και τις αρνητικές σκέψεις στην καθημερινότητά σας.</p>
       </div>
       <div class="phil-card reveal d3">
-        <div class="phil-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/><path d="M12 7v5l3 2"/></svg></div>
-        <h4 data-el="Με τον ρυθμό σου" data-en="At your own pace">Με τον ρυθμό σου</h4>
-        <p data-el="Η αλλαγή χρειάζεται χρόνο και σεβασμό. Προχωράμε βήμα-βήμα, χτίζοντας μια θεραπευτική σχέση εμπιστοσύνης και απόλυτης εχεμύθειας." data-en="Change takes time and respect. We move step by step, building a therapeutic relationship of trust and complete confidentiality.">Η αλλαγή χρειάζεται χρόνο και σεβασμό. Προχωράμε βήμα-βήμα, χτίζοντας μια θεραπευτική σχέση εμπιστοσύνης και απόλυτης εχεμύθειας.</p>
+        <div class="phil-icon">
+          <!-- Clock for time / pace -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h4 data-el="Με τον ρυθμό σας" data-en="At your own pace">Με τον ρυθμό σας</h4>
+        <p data-el="Κάθε άνθρωπος είναι μοναδικός. Προχωράμε βήμα-βήμα, προσαρμόζοντας τη θεραπευτική διαδικασία αποκλειστικά στις δικές σας ανάγκες και αντοχές." data-en="Every person is unique. We move step by step, adapting the therapeutic process exclusively to your own needs and boundaries.">Κάθε άνθρωπος είναι μοναδικός. Προχωράμε βήμα-βήμα, προσαρμόζοντας τη θεραπευτική διαδικασία αποκλειστικά στις δικές σας ανάγκες και αντοχές.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- SERVICES -->
 <section class="services" id="services">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="kicker"><span class="line"></span><span data-el="Υπηρεσίες" data-en="Services">Υπηρεσίες</span><span class="line"></span></span>
-      <h2 data-el="Σε τι μπορώ να <span class='it'>βοηθήσω</span>" data-en="How I can <span class='it'>help</span>">Σε τι μπορώ να <span class="it">βοηθήσω</span></h2>
-      <p data-el="Ατομικές συνεδρίες, δια ζώσης στη Θεσσαλονίκη ή μέσω βιντεοκλήσης από όπου κι αν βρίσκεσαι." data-en="Individual sessions, in person in Thessaloniki or via video call from wherever you are.">Ατομικές συνεδρίες, δια ζώσης στη Θεσσαλονίκη ή μέσω βιντεοκλήσης από όπου κι αν βρίσκεσαι.</p>
+      <h2 data-el="Πώς μπορούμε να <span class='it'>συνεργαστούμε</span>" data-en="How we can <span class='it'>work together</span>">Πώς μπορούμε να <span class="it">συνεργαστούμε</span></h2>
+      <p data-el="Ατομικές συνεδρίες, δια ζώσης στη Θεσσαλονίκη ή μέσω βιντεοκλήσης από όπου κι αν βρίσκεστε." data-en="Individual sessions, in person in Thessaloniki or via video call from wherever you are.">Ατομικές συνεδρίες, δια ζώσης στη Θεσσαλονίκη ή μέσω βιντεοκλήσης από όπου κι αν βρίσκεστε.</p>
     </div>
     <div class="serv-grid" id="servGrid"></div>
   </div>
 </section>
 
+<!-- SPACE -->
 <section class="space" id="space">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="kicker"><span class="line"></span><span data-el="Ο Χώρος" data-en="The Space">Ο Χώρος</span><span class="line"></span></span>
-      <h2 data-el="Ένα γραφείο που σε <span class='it'>καλωσορίζει</span>" data-en="An office that <span class='it'>welcomes</span> you">Ένα γραφείο που σε <span class="it">καλωσορίζει</span></h2>
-      <p data-el="Στο κέντρο της Θεσσαλονίκης, Κουσκούρα 8 — ένας ζεστός, ήρεμος χώρος σχεδιασμένος για να νιώσεις άνετα από το πρώτο λεπτό." data-en="In central Thessaloniki, 8 Kouskoura St — a warm, calm space designed to make you feel at ease from the first minute.">Στο κέντρο της Θεσσαλονίκης, Κουσκούρα 8 — ένας ζεστός, ήρεμος χώρος σχεδιασμένος για να νιώσεις άνετα από το πρώτο λεπτό.</p>
+      <h2 data-el="Ένα περιβάλλον <span class='it'>ηρεμίας</span>" data-en="An environment of <span class='it'>calm</span>">Ένα περιβάλλον <span class="it">ηρεμίας</span></h2>
+      <p data-el="Στο κέντρο της Θεσσαλονίκης, Κουσκούρα 8 — ένας ζεστός, ήρεμος χώρος σχεδιασμένος για να νιώσετε άνετα από το πρώτο λεπτό." data-en="In central Thessaloniki, 8 Kouskoura St — a warm, calm space designed to make you feel at ease from the first minute.">Στο κέντρο της Θεσσαλονίκης, Κουσκούρα 8 — ένας ζεστός, ήρεμος χώρος σχεδιασμένος για να νιώσετε άνετα από το πρώτο λεπτό.</p>
     </div>
     <div class="gallery">
       <div class="gal-item reveal-l">
         <img src="https://raw.githubusercontent.com/agelmet/FILIPPOPOULOU/0b6c6b9465b92a2e2285436b2c6a4385880f0967/unnamed-111.jpg" alt="Ο χώρος του γραφείου" data-lightbox>
-        <div class="ov"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg><span data-el="Δες σε πλήρες μέγεθος" data-en="View full size">Δες σε πλήρες μέγεθος</span></span></div>
+        <div class="ov"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg><span data-el="Δείτε σε πλήρες μέγεθος" data-en="View full size">Δείτε σε πλήρες μέγεθος</span></span></div>
       </div>
       <div class="gal-item reveal-s">
         <img src="https://raw.githubusercontent.com/agelmet/FILIPPOPOULOU/0b6c6b9465b92a2e2285436b2c6a4385880f0967/unnamed-112.jpg" alt="Ο χώρος του γραφείου" data-lightbox>
-        <div class="ov"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg><span data-el="Δες σε πλήρες μέγεθος" data-en="View full size">Δες σε πλήρες μέγεθος</span></span></div>
+        <div class="ov"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg><span data-el="Δείτε σε πλήρες μέγεθος" data-en="View full size">Δείτε σε πλήρες μέγεθος</span></span></div>
       </div>
       <div class="gal-item reveal-s">
         <img src="https://raw.githubusercontent.com/agelmet/FILIPPOPOULOU/f914261c67b295b106bb36330e5ef42d1ee64177/big_7161ab138231696dad3e2f6734bc14f3.jpg" alt="Ο χώρος του γραφείου" data-lightbox>
-        <div class="ov"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg><span data-el="Δες σε πλήρες μέγεθος" data-en="View full size">Δες σε πλήρες μέγεθος</span></span></div>
+        <div class="ov"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg><span data-el="Δείτε σε πλήρες μέγεθος" data-en="View full size">Δείτε σε πλήρες μέγεθος</span></span></div>
       </div>
       <div class="gal-item reveal-s">
         <img src="https://raw.githubusercontent.com/agelmet/FILIPPOPOULOU/f914261c67b295b106bb36330e5ef42d1ee64177/big_6b31a684d4e91c8ecd9935e3db6b1216.jpg" alt="Ο χώρος του γραφείου" data-lightbox>
-        <div class="ov"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg><span data-el="Δες σε πλήρες μέγεθος" data-en="View full size">Δες σε πλήρες μέγεθος</span></span></div>
+        <div class="ov"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg><span data-el="Δείτε σε πλήρες μέγεθος" data-en="View full size">Δείτε σε πλήρες μέγεθος</span></span></div>
       </div>
       <div class="gal-item reveal-r">
         <img src="https://raw.githubusercontent.com/agelmet/FILIPPOPOULOU/f914261c67b295b106bb36330e5ef42d1ee64177/big_5c6df86178c4e1ce11e871b47940a7d6.jpg" alt="Ο χώρος του γραφείου" data-lightbox>
-        <div class="ov"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg><span data-el="Δες σε πλήρες μέγεθος" data-en="View full size">Δες σε πλήρες μέγεθος</span></span></div>
+        <div class="ov"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg><span data-el="Δείτε σε πλήρες μέγεθος" data-en="View full size">Δείτε σε πλήρες μέγεθος</span></span></div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Q&A -->
 <section class="qa" id="qa">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="kicker"><span class="line"></span><span data-el="Συχνές Ερωτήσεις" data-en="Common Questions">Συχνές Ερωτήσεις</span><span class="line"></span></span>
-      <h2 data-el="Απαντήσεις σε όσα σε <span class='it'>απασχολούν</span>" data-en="Answers to what <span class='it'>worries</span> you">Απαντήσεις σε όσα σε <span class="it">απασχολούν</span></h2>
+      <h2 data-el="Απαντήσεις σε όσα σας <span class='it'>απασχολούν</span>" data-en="Answers to what <span class='it'>worries</span> you">Απαντήσεις σε όσα σας <span class="it">απασχολούν</span></h2>
       <p data-el="Πραγματικές ερωτήσεις ανθρώπων — οι απαντήσεις μου με απλά λόγια." data-en="Real questions from people — my answers in plain words.">Πραγματικές ερωτήσεις ανθρώπων — οι απαντήσεις μου με απλά λόγια.</p>
     </div>
     <div class="qa-list" id="qaList"></div>
   </div>
 </section>
 
+<!-- REVIEWS -->
 <section class="reviews" id="reviews">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="kicker"><span class="line"></span><span data-el="Μαρτυρίες" data-en="Testimonials">Μαρτυρίες</span><span class="line"></span></span>
-      <h2 data-el="Λόγια <span class='it'>εμπιστοσύνης</span>" data-en="Words of <span class='it'>trust</span>">Λόγια <span class="it">εμπιστοσύνης</span></h2>
+      <span class="kicker"><span class="line"></span><span data-el="Αξιολογήσεις" data-en="Reviews">Αξιολογήσεις</span><span class="line"></span></span>
+      <h2 data-el="Τι λένε οι <span class='it'>θεραπευόμενοι</span>" data-en="What the <span class='it'>patients</span> say">Τι λένε οι <span class="it">θεραπευόμενοι</span></h2>
       <p data-el="Αυτά που λένε οι άνθρωποι που εμπιστεύτηκαν τη διαδρομή τους μαζί μου." data-en="What people who trusted their journey with me have to say.">Αυτά που λένε οι άνθρωποι που εμπιστεύτηκαν τη διαδρομή τους μαζί μου.</p>
     </div>
     <div class="rev-grid">
@@ -663,14 +692,15 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
       </div>
     </div>
     <div class="rev-more reveal">
-      <a href="https://www.google.com/search?q=Φιλιπποπούλου+Φανή+Ψυχολόγος+Θεσσαλονίκη" target="_blank" rel="noopener" class="btn btn-ghost">
-        <span data-el="Διάβασε περισσότερες κριτικές" data-en="Read more reviews">Διάβασε περισσότερες κριτικές</span>
+      <a href="https://www.google.com/search?q=Φιλιπποπούλου+Φανή+Ψυχολόγος+Θεσσαλονίκη" target="_blank" rel="noopener" class="btn btn-outline">
+        <span data-el="Διαβάστε περισσότερες αξιολογήσεις" data-en="Read more reviews">Διαβάστε περισσότερες αξιολογήσεις</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
       </a>
     </div>
   </div>
 </section>
 
+<!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="blob c1"></div>
   <div class="blob c2"></div>
@@ -678,7 +708,7 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
     <div class="sec-head reveal">
       <span class="kicker"><span class="line"></span><span data-el="Επικοινωνία" data-en="Contact">Επικοινωνία</span><span class="line"></span></span>
       <h2 data-el="Ας κάνουμε το <span class='it'>πρώτο βήμα</span>" data-en="Let’s take the <span class='it'>first step</span>">Ας κάνουμε το <span class="it">πρώτο βήμα</span></h2>
-      <p data-el="Στείλε μου ένα μήνυμα ή κάλεσέ με. Είμαι εδώ για να ακούσω." data-en="Send me a message or give me a call. I’m here to listen.">Στείλε μου ένα μήνυμα ή κάλεσέ με. Είμαι εδώ για να ακούσω.</p>
+      <p data-el="Στείλτε μου ένα μήνυμα ή καλέστε με. Είμαι εδώ για να ακούσω." data-en="Send me a message or give me a call. I’m here to listen.">Στείλτε μου ένα μήνυμα ή καλέστε με. Είμαι εδώ για να ακούσω.</p>
     </div>
     <div class="contact-grid">
       <div class="contact-info reveal-l">
@@ -705,13 +735,14 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
     </div>
     <div class="contact-cta reveal">
       <a href="mailto:fanoula.filip@gmail.com" class="btn btn-primary">
-        <span data-el="Στείλε μήνυμα" data-en="Send a message">Στείλε μήνυμα</span>
+        <span data-el="Στείλτε μήνυμα" data-en="Send a message">Στείλτε μήνυμα</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>
       </a>
     </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <div class="foot-brand">
     <img src="https://raw.githubusercontent.com/agelmet/FILIPPOPOULOU/0b6c6b9465b92a2e2285436b2c6a4385880f0967/filiplog.jpg" alt="Logo">
@@ -740,6 +771,7 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
   <div class="advon" data-el="Σχεδιασμός & ανάπτυξη από <a href='https://www.advonmedia.com' target='_blank' rel='noopener'>Advon Media</a>" data-en="Designed & developed by <a href='https://www.advonmedia.com' target='_blank' rel='noopener'>Advon Media</a>">Σχεδιασμός & ανάπτυξη από <a href="https://www.advonmedia.com" target="_blank" rel="noopener">Advon Media</a></div>
 </footer>
 
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <button class="lb-close" id="lbClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   <img src="" alt="" id="lbImg">
@@ -748,22 +780,22 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
 <script>
 /* ---------- DATA ---------- */
 const SERVICES=[
-  {el:["Διαχείριση άγχους & στρες","Πρακτικές τεχνικές για να ηρεμήσεις το μυαλό και το σώμα."],en:["Anxiety & stress","Practical techniques to calm the mind and body."]},
-  {el:["Κρίσεις πανικού","Κατανόηση και εργαλεία για να σταματήσουν να σε ελέγχουν."],en:["Panic attacks","Understanding and tools so they stop controlling you."]},
-  {el:["Διαχείριση κατάθλιψης","Στήριξη για να ξαναβρείς νόημα και ενέργεια."],en:["Managing depression","Support to rediscover meaning and energy."]},
-  {el:["Ατομική ψυχοθεραπεία","Μια βαθιά, προσωπική διαδρομή αυτογνωσίας."],en:["Individual psychotherapy","A deep, personal journey of self-awareness."]},
-  {el:["Συμβουλευτική σχέσεων","Επικοινωνία, όρια και υγιείς σχέσεις."],en:["Relationship counselling","Communication, boundaries and healthy bonds."]},
-  {el:["Γυναικεία ενδυνάμωση","Αυτοπεποίθηση, φωνή και εσωτερική δύναμη."],en:["Women’s empowerment","Confidence, voice and inner strength."]},
-  {el:["Αντιμετώπιση θλίψης","Υποστήριξη στις στιγμές απώλειας και πένθους."],en:["Coping with grief","Support through loss and mourning."]},
-  {el:["Συνεδρία μέσω βιντεοκλήσης","Η ίδια ποιότητα φροντίδας, από όπου κι αν είσαι."],en:["Video-call sessions","The same quality of care, wherever you are."]},
+  {el:["Διαχείριση άγχους & στρες","Πρακτικές τεχνικές για να ηρεμήσετε το μυαλό και το σώμα."],en:["Anxiety & stress","Practical techniques to calm the mind and body."]},
+  {el:["Κρίσεις πανικού","Κατανόηση και εργαλεία για να σταματήσουν να σας ελέγχουν."],en:["Panic attacks","Understanding and tools so they stop controlling you."]},
+  {el:["Διαχείριση κατάθλιψης","Στήριξη για να ξαναβρείτε το νόημα και την ενέργειά σας."],en:["Managing depression","Support to rediscover meaning and energy."]},
+  {el:["Ατομική ψυχοθεραπεία","Μια ουσιαστική, προσωπική διαδρομή αυτογνωσίας."],en:["Individual psychotherapy","A deep, personal journey of self-awareness."]},
+  {el:["Συμβουλευτική σχέσεων","Επικοινωνία, όρια και χτίσιμο υγιών σχέσεων."],en:["Relationship counselling","Communication, boundaries and healthy bonds."]},
+  {el:["Γυναικεία ενδυνάμωση","Αυτοπεποίθηση, έκφραση και εσωτερική δύναμη."],en:["Women’s empowerment","Confidence, voice and inner strength."]},
+  {el:["Αντιμετώπιση απώλειας","Υποστήριξη στις δύσκολες στιγμές πένθους."],en:["Coping with grief","Support through loss and mourning."]},
+  {el:["Συνεδρίες βιντεοκλήσης","Η ίδια ποιότητα φροντίδας, από όπου κι αν βρίσκεστε."],en:["Video-call sessions","The same quality of care, wherever you are."]},
 ];
 const QA=[
-  {tag:{el:"Κρίση πανικού",en:"Panic attack"},q:{el:"Παθαίνω κρίσεις πανικού και μου ανεβαίνει η πίεση — οι γιατροί λένε ότι φταίει το άγχος. Τι να κάνω;",en:"I keep having panic attacks and my blood pressure rises — doctors say it’s anxiety. What can I do?"},a:{el:"Οι κρίσεις πανικού προκαλούνται από αγχώδεις και φοβικές σκέψεις, χωρίς αυτό να σημαίνει ότι υπάρχει πραγματικός κίνδυνος. Το στρες που δημιουργούν οι σκέψεις σωματοποιείται. Η συνεργασία με έναν ψυχολόγο θα σου δώσει τα εργαλεία για να τις αντιμετωπίσεις.",en:"Panic attacks are caused by anxious, fearful thoughts — without there being any real danger. The stress these thoughts create becomes physical. Working with a psychologist gives you the tools to manage them."}},
-  {tag:{el:"Άγχος & στρες",en:"Anxiety & stress"},q:{el:"Έχω συνεχώς άγχος και νιώθω σαν να μου σφίγγει το κεφάλι μια μέγγενη. Χρειάζομαι ψυχολόγο;",en:"I feel constant anxiety, like a vice squeezing my head. Do I need a psychologist?"},a:{el:"Το άγχος είναι ένα φυσιολογικό συναίσθημα φόβου ή πίεσης. Γίνεται όμως πρόβλημα όταν είναι υπερβολικό, χρόνιο και αρχίζει να επηρεάζει την καθημερινότητα και να σωματοποιείται. Ένας ψυχολόγος μπορεί να σου δώσει τα εργαλεία για να το διαχειριστείς.",en:"Anxiety is a normal feeling of fear or pressure. It becomes a problem when it is excessive, chronic and starts to affect daily life and manifest physically. A psychologist can give you the tools to manage it."}},
-  {tag:{el:"Κρίση πανικού",en:"Panic attack"},q:{el:"Μπορεί η ψυχοθεραπεία να με βοηθήσει να ξεπεράσω τις κρίσεις πανικού;",en:"Can psychotherapy help me overcome panic attacks?"},a:{el:"Ναι. Μεμονωμένα, οι κρίσεις πανικού δεν χρειάζονται απαραίτητα φαρμακευτική αγωγή. Στην ψυχοθεραπεία μαθαίνεις να αναγνωρίζεις και να αναδιαμορφώνεις τις σκέψεις που τις πυροδοτούν, ώστε σταδιακά να χάνουν τη δύναμή τους.",en:"Yes. On their own, panic attacks don’t necessarily require medication. In therapy you learn to recognise and reshape the thoughts that trigger them, so they gradually lose their power."}},
-  {tag:{el:"Κατάθλιψη",en:"Depression"},q:{el:"Έχω συμπτώματα ήπιας κατάθλιψης. Να πάρω μόνη μου φαρμακευτική αγωγή ή να απευθυνθώ σε ειδικό;",en:"I have mild depression symptoms. Should I self-medicate or see a specialist?"},a:{el:"Είναι σημαντικό να απευθυνθείς σε έναν ειδικό. Έτσι μπορεί να αξιολογηθεί σωστά η κατάστασή σου και να προταθεί η κατάλληλη προσέγγιση — ψυχοθεραπεία, φαρμακευτική αγωγή (σε συνεργασία με ψυχίατρο) ή ο συνδυασμός τους.",en:"It’s important to see a specialist. That way your situation can be properly assessed and the right approach proposed — psychotherapy, medication (with a psychiatrist) or a combination of both."}},
-  {tag:{el:"Δεοντολογία",en:"Ethics"},q:{el:"Στην online συνεδρία μου άκουσα κι άλλο άτομο στον χώρο της ψυχολόγου. Είναι αυτό αποδεκτό;",en:"During my online session I could hear another person in my psychologist’s room. Is that acceptable?"},a:{el:"Ο ψυχολόγος οφείλει να τηρεί απόλυτη εχεμύθεια. Αυτό που περιγράφεις δεν συνάδει με τον κώδικα δεοντολογίας — η άρση του απορρήτου προβλέπεται μόνο σε περίπτωση κινδύνου ζωής. Καλό είναι να το συζητήσεις ανοιχτά, ώστε να προστατέψεις την εμπιστοσύνη στη θεραπευτική σχέση.",en:"A psychologist must maintain complete confidentiality. What you describe does not align with the code of ethics — confidentiality is only lifted when life is at risk. It’s best to discuss it openly to protect the trust in your therapeutic relationship."}},
-  {tag:{el:"OCD & πανικός",en:"OCD & panic"},q:{el:"Έχω κρίσεις πανικού και τάσεις OCD. Σε τι είδους ψυχολόγο να απευθυνθώ;",en:"I have panic attacks and OCD tendencies. What kind of psychologist should I see?"},a:{el:"Υπάρχουν διάφορες αγχώδεις διαταραχές, μεταξύ τους και η ιδεοψυχαναγκαστική (OCD). Η Γνωσιακή – Συμπεριφορική Ψυχοθεραπεία αναδιαμορφώνει τις δυσλειτουργικές σκέψεις που σε επηρεάζουν, βοηθώντας σε να αλλάξεις το συναίσθημα και τη συμπεριφορά σου.",en:"There are several anxiety disorders, including obsessive-compulsive disorder (OCD). Cognitive – Behavioural Therapy reshapes the dysfunctional thoughts affecting you, helping you change how you feel and behave."}},
+  {tag:{el:"Κρίση πανικού",en:"Panic attack"},q:{el:"Παθαίνω κρίσεις πανικού και μου ανεβαίνει η πίεση — οι γιατροί λένε ότι φταίει το άγχος. Τι να κάνω;",en:"I keep having panic attacks and my blood pressure rises — doctors say it’s anxiety. What can I do?"},a:{el:"Οι κρίσεις πανικού προκαλούνται από αγχώδεις και φοβικές σκέψεις, χωρίς αυτό να σημαίνει ότι υπάρχει πραγματικός κίνδυνος. Το στρες που δημιουργούν οι σκέψεις σωματοποιείται. Η συνεργασία με έναν ψυχολόγο θα σας δώσει τα εργαλεία για να τις αντιμετωπίσετε.",en:"Panic attacks are caused by anxious, fearful thoughts — without there being any real danger. The stress these thoughts create becomes physical. Working with a psychologist gives you the tools to manage them."}},
+  {tag:{el:"Άγχος & στρες",en:"Anxiety & stress"},q:{el:"Έχω συνεχώς άγχος και νιώθω σαν να μου σφίγγει το κεφάλι μια μέγγενη. Χρειάζομαι ψυχολόγο;",en:"I feel constant anxiety, like a vice squeezing my head. Do I need a psychologist?"},a:{el:"Το άγχος είναι ένα φυσιολογικό συναίσθημα φόβου ή πίεσης. Γίνεται όμως πρόβλημα όταν είναι υπερβολικό, χρόνιο και αρχίζει να επηρεάζει την καθημερινότητα και να σωματοποιείται. Ένας ειδικός μπορεί να σας δώσει τα εργαλεία για να το διαχειριστείτε.",en:"Anxiety is a normal feeling of fear or pressure. It becomes a problem when it is excessive, chronic and starts to affect daily life and manifest physically. A specialist can give you the tools to manage it."}},
+  {tag:{el:"Κρίση πανικού",en:"Panic attack"},q:{el:"Μπορεί η ψυχοθεραπεία να με βοηθήσει να ξεπεράσω τις κρίσεις πανικού;",en:"Can psychotherapy help me overcome panic attacks?"},a:{el:"Ναι. Μεμονωμένα, οι κρίσεις πανικού δεν χρειάζονται απαραίτητα φαρμακευτική αγωγή. Στην ψυχοθεραπεία μαθαίνετε να αναγνωρίζετε και να αναδιαμορφώνετε τις σκέψεις που τις πυροδοτούν, ώστε σταδιακά να χάνουν τη δύναμή τους.",en:"Yes. On their own, panic attacks don’t necessarily require medication. In therapy you learn to recognise and reshape the thoughts that trigger them, so they gradually lose their power."}},
+  {tag:{el:"Κατάθλιψη",en:"Depression"},q:{el:"Έχω συμπτώματα ήπιας κατάθλιψης. Να πάρω μόνη μου φαρμακευτική αγωγή ή να απευθυνθώ σε ειδικό;",en:"I have mild depression symptoms. Should I self-medicate or see a specialist?"},a:{el:"Είναι σημαντικό να απευθυνθείτε σε έναν ειδικό. Έτσι μπορεί να αξιολογηθεί σωστά η κατάστασή σας και να προταθεί η κατάλληλη προσέγγιση — ψυχοθεραπεία, φαρμακευτική αγωγή (σε συνεργασία με ψυχίατρο) ή ο συνδυασμός τους.",en:"It’s important to see a specialist. That way your situation can be properly assessed and the right approach proposed — psychotherapy, medication (with a psychiatrist) or a combination of both."}},
+  {tag:{el:"Δεοντολογία",en:"Ethics"},q:{el:"Στην online συνεδρία μου άκουσα κι άλλο άτομο στον χώρο της ψυχολόγου. Είναι αυτό αποδεκτό;",en:"During my online session I could hear another person in my psychologist’s room. Is that acceptable?"},a:{el:"Ο ψυχολόγος οφείλει να τηρεί απόλυτη εχεμύθεια. Αυτό που περιγράφετε δεν συνάδει με τον κώδικα δεοντολογίας — η άρση του απορρήτου προβλέπεται μόνο σε περίπτωση κινδύνου ζωής. Καλό είναι να το συζητήσετε ανοιχτά, ώστε να προστατέψετε την εμπιστοσύνη στη θεραπευτική σχέση.",en:"A psychologist must maintain complete confidentiality. What you describe does not align with the code of ethics — confidentiality is only lifted when life is at risk. It’s best to discuss it openly to protect the trust in your therapeutic relationship."}},
+  {tag:{el:"OCD & πανικός",en:"OCD & panic"},q:{el:"Έχω κρίσεις πανικού και τάσεις ιδεοψυχαναγκασμού (OCD). Σε τι είδους ψυχολόγο να απευθυνθώ;",en:"I have panic attacks and OCD tendencies. What kind of psychologist should I see?"},a:{el:"Υπάρχουν διάφορες αγχώδεις διαταραχές, μεταξύ αυτών και η ιδεοψυχαναγκαστική (OCD). Η Γνωσιακή – Συμπεριφορική Ψυχοθεραπεία αναδιαμορφώνει τις δυσλειτουργικές σκέψεις που σας επηρεάζουν, βοηθώντας σας να αλλάξετε το συναίσθημα και τη συμπεριφορά σας.",en:"There are several anxiety disorders, including obsessive-compulsive disorder (OCD). Cognitive – Behavioural Therapy reshapes the dysfunctional thoughts affecting you, helping you change how you feel and behave."}},
 ];
 
 /* ---------- LANG ---------- */
