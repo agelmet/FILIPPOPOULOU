@@ -137,6 +137,8 @@ header:not(.scrolled) .menu-toggle span{background:#fff}
   background:linear-gradient(135deg,rgba(29,43,42,.65) 0%,rgba(29,43,42,.25) 100%);
 }
 
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;z-index:0;will-change:transform}
+
 .hero-inner{position:relative;z-index:2;max-width:1300px;margin:0 auto;width:100%;
   display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center}
 .hero-eyebrow{
@@ -288,8 +290,11 @@ section{position:relative}
 .gal-item:nth-child(5){grid-column:span 1;height:100%}
 .gal-item img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
 .gal-item:hover img{transform:scale(1.08)}
-.gal-item .ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(29,43,42,.65),transparent 60%);
-  display:flex;align-items:flex-end;padding:30px;opacity:0;transition:opacity .5s}
+.gal-item .ov{
+  position:absolute;inset:0;background:linear-gradient(to top,rgba(29,43,42,.65),transparent 60%);
+  display:flex;align-items:flex-end;padding:30px;opacity:0;transition:opacity .5s;
+  pointer-events:none; /* Ensure clicks fall through to the image */
+}
 .gal-item:hover .ov{opacity:1}
 .gal-item .ov span{color:#fff;font-family:var(--fancy);font-size:1.3rem;font-style:italic;display:flex;align-items:center;gap:12px;transform:translateY(15px);transition:transform .5s;opacity:0}
 .gal-item:hover .ov span{transform:translateY(0);opacity:1}
@@ -334,9 +339,10 @@ section{position:relative}
 
 /* ---------- CONTACT ---------- */
 .contact{background:var(--ink);color:var(--cream);position:relative;overflow:hidden}
-.contact .blob{opacity:.18;pointer-events:none;}
-.contact .blob.c1{width:420px;height:420px;background:var(--sage);top:-100px;left:-80px}
-.contact .blob.c2{width:380px;height:380px;background:var(--gold);bottom:-120px;right:-90px;opacity:.12}
+.contact-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.contact-bg .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.18;}
+.contact-bg .blob.c1{width:420px;height:420px;background:var(--sage);top:-100px;left:-80px}
+.contact-bg .blob.c2{width:380px;height:380px;background:var(--gold);bottom:-120px;right:-90px;opacity:.12}
 .contact .kicker{color:var(--gold-soft)}
 .contact .sec-head h2{color:var(--cream)}
 .contact .sec-head h2 .it{color:var(--gold-soft)}
@@ -361,7 +367,7 @@ section{position:relative}
 footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw,40px) 40px;text-align:center}
 .foot-brand{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:24px}
 .foot-brand img{width:46px;height:46px;border-radius:50%;object-fit:cover;border:1.5px solid var(--gold-soft)}
-.foot-brand b{font-family:var(--fancy);font-size:1.4rem;color:var(--cream)}
+.foot-brand b{font-family:var(--fancy);font-size:1.4rem;color:var(--cream);transition:color .4s}
 .foot-social{display:flex;justify-content:center;gap:18px;margin-bottom:28px}
 .foot-social a{color:var(--gold-soft);transition:all .3s}
 .foot-social a:hover{color:#fff;transform:scale(1.15) translateY(-3px)}
@@ -450,7 +456,7 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
 <!-- PRELOADER -->
 <div id="preloader">
   <img src="https://raw.githubusercontent.com/agelmet/FILIPPOPOULOU/0b6c6b9465b92a2e2285436b2c6a4385880f0967/filiplog.jpg" class="loader-logo" alt="Logo">
-  <div class="loader-name">Φανή Φιλιπποπούλου</div>
+  <div class="loader-name" data-el="Φανή Φιλιπποπούλου" data-en="Fani Filippopoulou">Φανή Φιλιπποπούλου</div>
   <div class="loader-title">ΨΥΧΟΛΟΓΟΣ - ΨΥΧΟΘΕΡΑΠΕΥΤΡΙΑ</div>
 </div>
 
@@ -462,7 +468,7 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
   <div class="brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
     <img src="https://raw.githubusercontent.com/agelmet/FILIPPOPOULOU/0b6c6b9465b92a2e2285436b2c6a4385880f0967/filiplog.jpg" alt="Logo Φανή Φιλιπποπούλου">
     <div class="brand-txt">
-      <b>Φανή Φιλιπποπούλου</b>
+      <b data-el="Φανή Φιλιπποπούλου" data-en="Fani Filippopoulou">Φανή Φιλιπποπούλου</b>
       <span data-el="Ψυχολόγος" data-en="Psychologist">Ψυχολόγος</span>
     </div>
   </div>
@@ -568,7 +574,6 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
     <div class="phil-grid">
       <div class="phil-card reveal d1">
         <div class="phil-icon">
-          <!-- Heart in hand for empathy and safety -->
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
         </div>
         <h4 data-el="Ασφαλής χώρος" data-en="A safe space">Ασφαλής χώρος</h4>
@@ -576,7 +581,6 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
       </div>
       <div class="phil-card reveal d2">
         <div class="phil-icon">
-          <!-- Target/Goals for practical tools -->
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
         </div>
         <h4 data-el="Πρακτικά εργαλεία" data-en="Practical tools">Πρακτικά εργαλεία</h4>
@@ -584,7 +588,6 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
       </div>
       <div class="phil-card reveal d3">
         <div class="phil-icon">
-          <!-- Clock for time / pace -->
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
         <h4 data-el="Με τον ρυθμό σας" data-en="At your own pace">Με τον ρυθμό σας</h4>
@@ -702,8 +705,12 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
-  <div class="blob c1"></div>
-  <div class="blob c2"></div>
+  <!-- Fix for rendering gap referenced in emove]e.jpg -->
+  <div class="contact-bg">
+    <div class="blob c1"></div>
+    <div class="blob c2"></div>
+  </div>
+  
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="kicker"><span class="line"></span><span data-el="Επικοινωνία" data-en="Contact">Επικοινωνία</span><span class="line"></span></span>
@@ -746,7 +753,7 @@ footer{background:#16201f;color:rgba(251,248,242,.6);padding:60px clamp(20px,5vw
 <footer>
   <div class="foot-brand">
     <img src="https://raw.githubusercontent.com/agelmet/FILIPPOPOULOU/0b6c6b9465b92a2e2285436b2c6a4385880f0967/filiplog.jpg" alt="Logo">
-    <b>Φανή Φιλιπποπούλου</b>
+    <b data-el="Φανή Φιλιπποπούλου" data-en="Fani Filippopoulou">Φανή Φιλιπποπούλου</b>
   </div>
   
   <div class="foot-social">
