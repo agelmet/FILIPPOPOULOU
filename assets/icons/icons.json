@@ -1,0 +1,16 @@
+{
+ "source": {
+  "kind": "file",
+  "ref": "assets/img/fani-filippopoulou-psychologos-logo.svg"
+ },
+ "source_md5": "7c75c33b5a2e28c584cbb0b6eaf36b54",
+ "version": "fcb482eb",
+ "tile": null,
+ "crop": null,
+ "header": [
+  "inline",
+  "index.html",
+  "229541fe23a0ed275e933fa8bf782335"
+ ],
+ "made": "2026-10-19"
+}
